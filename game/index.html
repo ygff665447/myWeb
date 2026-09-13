@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>末班车档案</title>
+<link rel="stylesheet" href="css/horror.css">
+</head>
+<body>
+<div class="fx-noise"></div>
+<div class="fx-scan"></div>
+<main id="app">
+  <pre class="log" id="bootLog"></pre>
+  <div id="photoWrap" style="display:none">
+    <div class="frame flicker">
+      <img class="shot" src="../assets/p13.png" alt="" onerror="this.classList.add('missing')">
+      <span class="tag">CAM 03 · 23:47:12</span>
+    </div>
+    <p class="dim" style="margin-top:14px">匹配成功 · 第 13 位乘客 · 点击照片继续</p>
+  </div>
+  <div class="gate" id="gate">
+    <label>在末班车时刻表输入档案码</label>
+    <input id="gateInput" autocomplete="off" spellcheck="false" placeholder="LASTTRAIN-____">
+    <button id="gateBtn">确 认</button>
+    <p class="hint" id="gateHint"></p>
+  </div>
+</main>
+<button class="reset" id="reset">清除进度</button>
+<script src="js/core.js"></script>
+<script>
+(function(){
+  LT.mark('boot');
+  var log=document.getElementById('bootLog');
+  var lines=[
+    '> 面部比对中……',
+    '> 样本来源：3 号线失物招领 / 遗留物品 1 件',
+    '> 匹配成功。',
+    '> 姓名：林野',
+    '> 末班车乘客编号：13',
+    '> 当前位置：归墟站'
+  ];
+  LT.typewriter(log,lines,function(){
+    var w=document.getElementById('photoWrap');
+    w.style.display='';
+    w.addEventListener('click',function(){
+      LT.blip(300,.15,'sine',.06);
+      location.href='ch1.html';
+    });
+    if(LT.has('end')){
+      var g=document.getElementById('gate');
+      g.classList.add('show');
+      LT.gate(g,'LASTTRAIN-13A',function(){
+        LT.mark('secret');
+        location.href='secret.html';
+      },'档案码不正确。它在看着你。');
+    }
+  });
+})();
+</script>
+</body>
+</html>

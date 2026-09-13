@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>末班车档案 · 第一章</title>
+<link rel="stylesheet" href="css/horror.css">
+</head>
+<body>
+<div class="fx-noise"></div>
+<div class="fx-scan"></div>
+<main id="app">
+  <p class="ch">第一章 · 遗留消息</p>
+  <div class="chat">
+    <p class="msg sys">今天 23:12</p>
+    <p class="msg them">今天又加班，只能赶 23:47 那趟末班车了</p>
+    <p class="msg them">车上很空，但有个穿红雨衣的老头一直盯着我看</p>
+    <p class="msg me">？你别吓我</p>
+    <p class="msg them">他刚才跟我说了一句话</p>
+    <p class="msg them">“你坐了我的位置。”</p>
+    <p class="msg me">你换一节车厢啊</p>
+    <p class="msg sys">23:47</p>
+    <p class="msg them">车停了</p>
+    <p class="msg them">这一站不叫归墟啊，广播里为什么念归墟</p>
+    <p class="msg them">我到归墟站了，这里没有出口</p>
+    <p class="msg sys">消息已发出，但被对方拒收</p>
+  </div>
+  <div class="gate show" id="gate">
+    <label>请输入末班车发车时间（格式 12:34）</label>
+    <input id="gateInput" autocomplete="off" spellcheck="false" placeholder="— — : — —">
+    <button id="gateBtn">确 认</button>
+    <p class="hint" id="gateHint"></p>
+  </div>
+</main>
+<button class="reset" id="reset">清除进度</button>
+<script src="js/core.js"></script>
+<script>
+LT.gate(document.getElementById('gate'),'2347',function(){
+  location.href='ch2.html';
+},'时间不对。你确定他真的上了车？','ch1');
+</script>
+</body>
+</html>
