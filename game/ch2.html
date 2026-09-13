@@ -53,10 +53,9 @@
 <script>
 (function(){
   var box=document.getElementById('phoneBox');
-  box.style.display='none';
   document.getElementById('phoneLink').addEventListener('click',function(){
-    if(box.style.display==='none'){
-      box.style.display='';
+    if(!box.classList.contains('show')){
+      box.classList.add('show');
       LT.blip(400,.15,'sine',.06);
       box.scrollIntoView({behavior:'smooth',block:'center'});
     }
