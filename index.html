@@ -13,12 +13,16 @@
             padding: 0;
             box-sizing: border-box;
         }
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Fira Code', 'Courier New', monospace;
             background: #0a0a0a;
             color: #d0d0d0;
-            overflow: hidden;
-            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            min-height: 100vh;
             width: 100vw;
         }
         #matrixCanvas {
@@ -34,16 +38,14 @@
             position: relative;
             z-index: 1;
             width: 100vw;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             padding: 30px 40px;
             background: rgba(10, 10, 10, 0.55);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-            overflow: hidden;
         }
         .header {
             width: 100%;
@@ -54,6 +56,7 @@
             padding-bottom: 20px;
             border-bottom: 1px solid rgba(0, 255, 65, 0.15);
             margin-bottom: 30px;
+            margin-top: auto;
             flex-shrink: 0;
         }
         .logo {
@@ -98,7 +101,7 @@
         .video-grid-wrapper {
             width: 100%;
             max-width: 1300px;
-            flex: 1;
+            min-height: 65vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -109,7 +112,6 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             width: 100%;
-            max-height: 100%;
             padding: 4px 0;
             justify-items: center;
             align-items: start;
@@ -276,6 +278,92 @@
             background: #00ff41;
             opacity: 0.3;
         }
+        /* ============================================================
+           隐藏的游戏入口（恐怖风格，不显眼）
+           ============================================================ */
+        .game-link {
+            display: block;
+            text-align: center;
+            margin-top: 70px;
+            margin-bottom: auto;
+            text-decoration: none;
+            font-family: 'Fira Code', monospace;
+            color: #1a0a0a;
+            opacity: 0.22;
+            letter-spacing: 4px;
+            font-size: 11px;
+            position: relative;
+            user-select: none;
+            padding: 10px 24px;
+            transition: opacity 0.8s ease, color 0.8s ease, text-shadow 0.8s ease;
+        }
+        .game-link:hover {
+            opacity: 0.85;
+            color: #6b0000;
+            text-shadow: 0 0 25px rgba(139, 0, 0, 0.6), 0 0 50px rgba(139, 0, 0, 0.2);
+        }
+        .game-text {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 6px;
+            transition: color 0.8s ease;
+        }
+        .game-link:hover .game-text {
+            color: #8b0000;
+            animation: flicker 2.4s infinite;
+        }
+        .game-hint {
+            display: block;
+            font-size: 9px;
+            color: #0f0505;
+            margin-top: 8px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            transition: color 0.8s ease;
+        }
+        .game-link:hover .game-hint {
+            color: #3a0505;
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            3% { opacity: 0.4; }
+            6% { opacity: 1; }
+            7% { opacity: 0.2; }
+            8% { opacity: 1; }
+            50% { opacity: 1; }
+            51% { opacity: 0.6; }
+            52% { opacity: 1; }
+        }
+        .game-link::before {
+            content: '末班车档案';
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            color: #ff0000;
+            opacity: 0;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 6px;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .game-link:hover::before {
+            opacity: 0.08;
+            animation: glitch 0.4s infinite;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-1px, 1px); }
+            40% { transform: translate(1px, -1px); }
+            60% { transform: translate(-1px, -1px); }
+            80% { transform: translate(1px, 1px); }
+            100% { transform: translate(0); }
+        }
+        /* ============================================================
+           模态框
+           ============================================================ */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -411,6 +499,7 @@
             .modal-info .title { font-size: 17px; }
             .modal-info .hint { font-size: 12px; }
             .modal-info .hint kbd { padding: 1px 8px; font-size: 11px; }
+            .game-link { margin-top: 50px; }
         }
         @media (max-width: 480px) {
             .app { padding: 12px 14px; }
@@ -432,6 +521,9 @@
             .modal-info .title .badge { font-size: 10px; padding: 0 8px; margin-left: 6px; }
             .modal-info .hint { font-size: 10px; }
             .modal-info .hint kbd { font-size: 10px; padding: 1px 6px; }
+            .game-link { margin-top: 40px; padding: 8px 16px; }
+            .game-text { font-size: 11px; letter-spacing: 4px; }
+            .game-hint { font-size: 8px; letter-spacing: 2px; }
         }
         .sr-only {
             position: absolute;
@@ -466,6 +558,15 @@
                 <!-- 由 JavaScript 动态渲染 -->
             </div>
         </div>
+
+        <!-- ============================================================
+             隐藏的游戏入口（滑动到底部才出现）
+             ============================================================ -->
+        <a href="/game/" class="game-link" aria-label="进入末班车档案">
+            <span class="game-text">末班车档案</span>
+            <span class="game-hint">[ 档案已封存 · 谨慎进入 ]</span>
+        </a>
+
     </div>
 
     <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="视频播放">
@@ -490,9 +591,9 @@
 
     <script>
         // =============================================================
-        //  视频数据 —— 已设置为本地文件 geek-video.mp4
+        //  视频数据
         // =============================================================
-        const videos = [
+         const videos = [
             {
             id: 1,
             title: '我的迪克视频',
@@ -686,7 +787,7 @@
             draw();
         })();
 
-        console.log('❯ GeekVid 已启动 · 您的视频文件请命名为 geek-video.mp4');
+        console.log('❯ GeekVid 已启动 · 末班车档案已封存');
     </script>
 </body>
 </html>
