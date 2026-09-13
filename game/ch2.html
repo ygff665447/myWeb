@@ -18,12 +18,21 @@
     <table class="tbl">
       <tr><th>编号</th><th>物品</th><th>拾获时间</th><th>状态</th></tr>
       <tr><td>0013</td><td>红色雨衣</td><td>23:47</td><td>无人认领</td></tr>
-      <tr><td>0014</td><td>旧手机</td><td>00:03</td><td>无人认领</td></tr>
+      <tr><td>0014</td><td><a href="javascript:void(0)" id="phoneLink" style="color:#cf3a3a;text-decoration:underline">旧手机</a></td><td>00:03</td><td>无人认领</td></tr>
       <tr><td>0015</td><td>一把雨伞</td><td>00:07</td><td>无人认领</td></tr>
       <tr class="hot"><td>0016</td><td>一张脸</td><td>00:13</td><td>已上车</td></tr>
     </table>
     <p class="note">注：编号 0016 的遗留物品于 00:13 自行移动至站台，监控已记录。请勿单独查看。</p>
   </div>
+
+  <div class="gate" id="phoneBox" style="border-top:none;margin-top:0;padding-top:0">
+    <div class="rec">
+      <p class="recTitle">旧手机 · 自动朗读</p>
+      <p>「不要数乘客。」</p>
+      <p class="dim">——录音在此处中断。</p>
+    </div>
+  </div>
+
   <div class="shotGrid">
     <div class="frame"><img class="shot f1" src="../assets/p13.png" alt="" onerror="this.classList.add('missing')"><span class="tag">23:47</span></div>
     <div class="frame"><img class="shot f2" src="../assets/p13.png" alt="" onerror="this.classList.add('missing')"><span class="tag">23:58</span></div>
@@ -31,6 +40,7 @@
     <div class="frame"><img class="shot f4" src="../assets/p13.png" alt="" onerror="this.classList.add('missing')"><span class="tag">00:07</span></div>
     <div class="frame"><img class="shot f5" src="../assets/p13.png" alt="" onerror="this.classList.add('missing')"><span class="tag">00:13</span></div>
   </div>
+
   <div class="gate show" id="gate">
     <label>旧手机里只剩一句话。请输入它。</label>
     <input id="gateInput" autocomplete="off" spellcheck="false" placeholder="DONT____">
@@ -41,9 +51,20 @@
 <button class="reset" id="reset">清除进度</button>
 <script src="js/core.js"></script>
 <script>
-LT.gate(document.getElementById('gate'),'DONTCOUNT',function(){
-  location.href='ch3.html';
-},'不是这句。再听一遍那段录音。','ch2');
+(function(){
+  var box=document.getElementById('phoneBox');
+  box.style.display='none';
+  document.getElementById('phoneLink').addEventListener('click',function(){
+    if(box.style.display==='none'){
+      box.style.display='';
+      LT.blip(400,.15,'sine',.06);
+      box.scrollIntoView({behavior:'smooth',block:'center'});
+    }
+  });
+  LT.gate(document.getElementById('gate'),'DONTCOUNT',function(){
+    location.href='ch3.html';
+  },'不是这句。再听一遍那段录音。','ch2');
+})();
 </script>
 </body>
 </html>
